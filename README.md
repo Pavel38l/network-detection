@@ -2,7 +2,7 @@
 
 ## Ссылка на демонстрацию
 
-https://ssd-detection.herokuapp.com/
+https://network-detection.herokuapp.com/
 
 Первая загрузка приложения может занимать время из-за особенностей Heroku
 
