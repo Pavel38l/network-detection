@@ -1,6 +1,5 @@
 import os
 from app import app
-from forms import LoginForm
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from app import generator
 from werkzeug.utils import secure_filename
@@ -16,17 +15,6 @@ def index():
 def about():
     return render_template('about.html', title='About')
 
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
-        return redirect(url_for('index'))
-    return render_template('login.html', title='Sign In', form=form)
-
-
 @app.route('/upload')
 def upload_form():
     return render_template('upload.html')
@@ -39,7 +27,8 @@ def upload_image():
         return redirect(request.url)
     file = request.files['file']
     thr = request.form['thr']
-    print(thr)
+    network = request.form.get('network')
+    print(network)
     if file.filename == '':
         flash('No image selected for uploading')
         return redirect(request.url)
@@ -49,7 +38,7 @@ def upload_image():
         file.save(os.path.join(app.config['UPLOADED_IMAGES_DEST'], filename))
         #print('upload_image filename: ' + filename)
         flash('Image successfully uploaded')
-        return render_template('upload.html', filename=filename, thr=thr)
+        return render_template('upload.html', filename=filename, thr=thr, network=network)
     else:
         flash('Allowed image types are -> png, jpg, jpeg, gif')
         return redirect(request.url)
@@ -69,7 +58,7 @@ def output_image(filename):
 
 @app.route('/process', methods=['POST'])
 def process():
-    json = jsonify({'filename': transform(request.form['filename'], request.form['thr'])})
+    json = jsonify({'filename': transform(request.form['filename'], request.form['thr'], request.form.get('network'))})
     #clear(request.form['filename'])
     #flash('Image processed')
     return json
@@ -85,14 +74,14 @@ def process():
 #         os.remove(outpath)
 
 
-def transform(filename, thr):
+def transform(filename, thr, network):
     print("transform " + filename)
     # if os.path.isfile(os.path.join(app.config['UPLOADED_IMAGES_DEST'], f"out_{filename}")):
     #     print("dfd")
     img_path = f"{app.config['UPLOADED_IMAGES_DEST']}/{filename}"
     output_filename = get_output_filename(filename)
     out_path = f"{app.config['OUTPUT_IMAGES_DEST']}/{output_filename}"
-    detection(img_path, out_path, thr)
+    detection(img_path, out_path, thr, network)
     return output_filename
 
 
