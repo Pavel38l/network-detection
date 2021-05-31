@@ -17,7 +17,7 @@ def detection(img_path, out_path, thr, network):
         thr = float(thr)
         config = 'mmdetection/configs/ssd/ssd300_coco.py'
         checkpoint = 'mmdetection/checkpoints/ssd300_coco_20200307-a92d2092.pth'
-        if network is not None:
+        if network == 'on':
                 config = 'mmdetection/configs/mask_rcnn/mask_rcnn_r50_caffe_fpn_mstrain-poly_3x_coco.py'
                 checkpoint = 'mmdetection/checkpoints/mask_rcnn_r50_caffe_fpn_mstrain-poly_3x_coco_bbox_mAP-0.408__segm_mAP-0.37_20200504_163245-42aa3d00.pth'
         model = init_detector(config, checkpoint, device='cpu')

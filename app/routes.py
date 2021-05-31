@@ -27,7 +27,7 @@ def upload_image():
         return redirect(request.url)
     file = request.files['file']
     thr = request.form['thr']
-    network = str(request.form.get('network'))
+    network = request.form.get('network')
     print(network)
     if file.filename == '':
         flash('No image selected for uploading')
