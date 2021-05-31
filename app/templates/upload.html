@@ -36,6 +36,7 @@
             {{ super() }}
             <script>
             if ('{{ filename }}' != '') {
+                console.log('{{ network }}');
                 transform(
                       '#div1',
                        '{{ filename }}',

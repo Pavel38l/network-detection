@@ -51,11 +51,12 @@
 {% block scripts %}
     {{ super() }}
     <script>
-        function transform(destElem, filename, thr) {
+        function transform(destElem, filename, thr, network) {
         $(destElem).html('<img src="{{ url_for('static', filename='loading.gif') }}"><br/><img src="{{ url_for('display_image', filename=filename) }}">');
             $.post('/process', {
                 filename: filename,
-                thr: thr
+                thr: thr,
+                network: network
             }).done(function(response) {
                 var oFilename = response['filename'];
                 var src = 'output/' + oFilename;

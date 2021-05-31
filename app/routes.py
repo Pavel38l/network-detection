@@ -27,7 +27,7 @@ def upload_image():
         return redirect(request.url)
     file = request.files['file']
     thr = request.form['thr']
-    network = request.form.get('network')
+    network = str(request.form.get('network'))
     print(network)
     if file.filename == '':
         flash('No image selected for uploading')
@@ -76,6 +76,7 @@ def process():
 
 def transform(filename, thr, network):
     print("transform " + filename)
+    print(network)
     # if os.path.isfile(os.path.join(app.config['UPLOADED_IMAGES_DEST'], f"out_{filename}")):
     #     print("dfd")
     img_path = f"{app.config['UPLOADED_IMAGES_DEST']}/{filename}"
