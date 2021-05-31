@@ -14,10 +14,10 @@ from mmdet.apis import inference_detector, init_detector, show_result_pyplot
 
 def detection(img_path, out_path, thr):
         thr = float(thr)
-        #config = 'mmdetection/configs/ssd/ssd300_coco.py'
-        #checkpoint = 'mmdetection/checkpoints/ssd300_coco_20200307-a92d2092.pth'
-        config = 'mmdetection/configs/mask_rcnn/mask_rcnn_r50_caffe_fpn_mstrain-poly_3x_coco.py'
-        checkpoint = 'mmdetection/checkpoints/mask_rcnn_r50_caffe_fpn_mstrain-poly_3x_coco_bbox_mAP-0.408__segm_mAP-0.37_20200504_163245-42aa3d00.pth'
+        config = 'mmdetection/configs/ssd/ssd300_coco.py'
+        checkpoint = 'mmdetection/checkpoints/ssd300_coco_20200307-a92d2092.pth'
+        #config = 'mmdetection/configs/mask_rcnn/mask_rcnn_r50_caffe_fpn_mstrain-poly_3x_coco.py'
+        #checkpoint = 'mmdetection/checkpoints/mask_rcnn_r50_caffe_fpn_mstrain-poly_3x_coco_bbox_mAP-0.408__segm_mAP-0.37_20200504_163245-42aa3d00.pth'
         model = init_detector(config, checkpoint, device='cpu')
         result = inference_detector(model, img_path)
         #res = show_result_pyplot(model, img_path, result, score_thr=0.3)
